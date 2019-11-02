@@ -45,6 +45,11 @@ function initializeCard(id, tee) {
     courseSelection.then(val => {
 
         let holes = val.data.holes;
+        let totalYards = 0;
+        let totalYardsIn = 0;
+        let totalPar = 0;
+        let totalParIn =0;
+    
 
         $("#cardCont").html("");
 
@@ -66,9 +71,18 @@ function initializeCard(id, tee) {
             let par = thing.par;
             let hcp = thing.hcp;
             let hole = holes[i].hole;
+           
+            totalYards += thing.yards;
+            totalPar += thing.par;
+            
+            if(i < 9){
+                totalYardsIn += thing.yards;
+                totalParIn += thing.par;
+            }
+          
 
             $("#cardCont").append(`
-                <div class = "col" id = "col${i}">
+                <div class = "col" id = "col${i+1}">
                     <div>Hole ${hole}</div>
                     <div>${yards}</div>
                     <div>${par}</div>
@@ -76,7 +90,9 @@ function initializeCard(id, tee) {
                 </div>
             `);
         };
+    
         addPlayersToCard(holes.length, 3);
+        createTotals(totalYardsIn, totalYards, totalParIn, totalPar);
     })
 }
 
@@ -94,5 +110,22 @@ function addPlayersToCard(holes, players) {
                 </div>
             `)
         }
+    }
+}
+
+function createTotals(totalYardsIn, totalYards, totalParIn, totalPar){
+    $(`<div id = 'totalIn'><div>TotalIn</div><div>${totalYardsIn}</div><div>${totalParIn}</div><div>-</div></div>`).insertAfter("#col9");
+    $(`<div id = 'totalOut'><div>TotalOut</div><div>${totalYards}</div><div>${totalPar}</div><div>-</div></div>`).insertAfter("#col18");
+
+    printPlayerTotals(3);
+}
+
+function printPlayerTotals(players){
+    for(let i = 0; i < players; i++){
+
+        //add player totals
+
+        $("#totalIn").append(`<div id = "p${i}In"> P${i}:IN </div>`)
+        $("#totalOut").append(`<div id = "p${i}Out"> P${i}:Out </div>`)
     }
 }
