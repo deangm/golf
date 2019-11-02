@@ -91,22 +91,24 @@ function initializeCard(id, tee) {
             `);
         };
     
-        addPlayersToCard(holes.length, 3);
+        addPlayersToCard(holes.length, players.players.length);
         createTotals(totalYardsIn, totalYards, totalParIn, totalPar);
     })
 }
 
-function addPlayersToCard(holes, players) {
-    for (let player = 1; player <= players; player++) {
+function addPlayersToCard(holes, numPlayers) {
+    for (let player = 1; player <= numPlayers; player++) {
         $(`#headings`).append(`
-        <div id = "${player}">
-            Player:${player}
-        </div>
-    `)
-        for (let hole = 0; hole < holes; hole++) {
+            <div id = "p${player}" contenteditable="true" onclick = "clearHtml(this)"; onkeyup = "changePlayerName(event, this.id, this.innerHTML, this)">
+                Player:${player}
+            </div>
+        `)
+
+        
+        for (let hole = 0; hole <= holes; hole++) {
             $(`#col${hole}`).append(`
-                <div id = "${player}${hole+1}">
-                    ${player}:${hole+1}
+                <div id = "${player-1}${hole}" contenteditable = "true" onclick = "clearHtml" onkeyup = "updateScore(event, this, ${player-1}, ${hole}, this.innerHTML)">
+                    ${players.players[player-1].scores[hole] ? players.players[player-1].scores[hole] : "-"}
                 </div>
             `)
         }
@@ -117,15 +119,74 @@ function createTotals(totalYardsIn, totalYards, totalParIn, totalPar){
     $(`<div id = 'totalIn'><div>TotalIn</div><div>${totalYardsIn}</div><div>${totalParIn}</div><div>-</div></div>`).insertAfter("#col9");
     $(`<div id = 'totalOut'><div>TotalOut</div><div>${totalYards}</div><div>${totalPar}</div><div>-</div></div>`).insertAfter("#col18");
 
-    printPlayerTotals(3);
+    addPlayerTotals(players.players.length);
 }
 
-function printPlayerTotals(players){
-    for(let i = 0; i < players; i++){
+function addPlayerTotals(numplayers){
+    for(let i = 0; i < numplayers; i++){
 
-        //add player totals
+        $("#totalIn").append(`<div id = "p${i}In"> ${players.players[i].totalIn} </div>`)
+        $("#totalOut").append(`<div id = "p${i}Out"> ${players.players[i].totalIn} </div>`)
+    }
+}
 
-        $("#totalIn").append(`<div id = "p${i}In"> P${i}:IN </div>`)
-        $("#totalOut").append(`<div id = "p${i}Out"> P${i}:Out </div>`)
+function createPlayers(event, numPlayers){
+
+    if(event.which == 13){
+        for(let i = 0; i<numPlayers; i ++){
+            let player = new Player();
+            players.add(player);
+        }
+    }
+
+   
+}
+
+function clearHtml(el){
+    $(el).html("");
+}
+
+function changePlayerName(event, player, name, el){
+   
+    if(event.which == 13){
+        let updatedName = name.split("<")[0];
+        players.players[player[1]].updateName(updatedName);
+        $(el).html(updatedName);
+        $(el).next().focus();
+    
+    }
+}
+
+function updateScore(event, el, player, hole, score){
+    if(event.which == 13){
+        let updatedScore = score.split("<")[0];
+        players.players[player].addScore(hole, updatedScore);
+        players.players[player].getTotals();
+        $(el).html(updatedScore);
+        $(el).next().focus();
+        printScores();
+    }
+}
+
+function printScores(){
+    for (let player = 1; player <= players.players.length; player++) { 
+
+        let totalInHtml = players.players[player - 1].totalIn;
+        let totalOutHtml = players.players[player - 1].totalOut;
+
+        $(`#p${player-1}In`).html("");
+        $(`#p${player-1}In`).html(totalInHtml);
+
+        $(`#p${player-1}Out`).html("");
+        $(`#p${player-1}Out`).html(totalOutHtml);
+
+        for (let hole = 1; hole <= 18; hole++) {
+            
+            let html = players.players[player-1].scores[hole] ? players.players[player-1].scores[hole] : "-";
+            
+            $(`#${player-1}${hole}`).html("");
+            $(`#${player-1}${hole}`).html(html);
+
+        }
     }
 }
