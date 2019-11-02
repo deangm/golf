@@ -55,10 +55,10 @@ function initializeCard(id, tee) {
 
         $("#cardCont").append(`
             <div class = "col" id = "headings">
-                <div>Hole:</div>
-                <div>Yards</div>
-                <div>Par</div>
-                <div>HCP</div>
+                <div class = "cell">Hole:</div>
+                <div class = "cell"> Yards</div>
+                <div class = "cell" >Par</div>
+                <div class = "cell">HCP</div>
             </div>
          `);
         for (let i = 0; i < holes.length; i++) {
@@ -83,10 +83,10 @@ function initializeCard(id, tee) {
 
             $("#cardCont").append(`
                 <div class = "col" id = "col${i+1}">
-                    <div>Hole ${hole}</div>
-                    <div>${yards}</div>
-                    <div>${par}</div>
-                    <div>${hcp}</div>
+                    <div class ="cell">Hole ${hole}</div>
+                    <div class = "cell">${yards}</div>
+                    <div class = "cell">${par}</div>
+                    <div class = "cell">${hcp}</div>
                 </div>
             `);
         };
@@ -99,7 +99,7 @@ function initializeCard(id, tee) {
 function addPlayersToCard(holes, numPlayers) {
     for (let player = 1; player <= numPlayers; player++) {
         $(`#headings`).append(`
-            <div id = "p${player}" contenteditable="true" onclick = "clearHtml(this)"; onkeyup = "changePlayerName(event, this.id, this.innerHTML, this)">
+            <div class = "cell" id = "p${player}" contenteditable="true" onclick = "clearHtml(this)"; onkeyup = "changePlayerName(event, this.id, this.innerHTML, this)">
                 Player:${player}
             </div>
         `)
@@ -107,7 +107,7 @@ function addPlayersToCard(holes, numPlayers) {
         
         for (let hole = 0; hole <= holes; hole++) {
             $(`#col${hole}`).append(`
-                <div id = "${player-1}${hole}" contenteditable = "true" onclick = "clearHtml" onkeyup = "updateScore(event, this, ${player-1}, ${hole}, this.innerHTML)">
+                <div class = "cell" id = "${player-1}${hole}" contenteditable = "true" onclick = "clearHtml" onkeyup = "updateScore(event, this, ${player-1}, ${hole}, this.innerHTML)">
                     ${players.players[player-1].scores[hole] ? players.players[player-1].scores[hole] : "-"}
                 </div>
             `)
@@ -116,8 +116,8 @@ function addPlayersToCard(holes, numPlayers) {
 }
 
 function createTotals(totalYardsIn, totalYards, totalParIn, totalPar){
-    $(`<div id = 'totalIn'><div>TotalIn</div><div>${totalYardsIn}</div><div>${totalParIn}</div><div>-</div></div>`).insertAfter("#col9");
-    $(`<div id = 'totalOut'><div>TotalOut</div><div>${totalYards}</div><div>${totalPar}</div><div>-</div></div>`).insertAfter("#col18");
+    $(`<div id = 'totalIn'><div class = "cell">TotalIn</div><div class = "cell">${totalYardsIn}</div><div class = "cell">${totalParIn}</div><div class = "cell">-</div></div>`).insertAfter("#col9");
+    $(`<div id = 'totalOut'><div class = "cell" >TotalOut</div><div class = "cell" >${totalYards}</div><div class = "cell" >${totalPar}</div><div class = "cell" >-</div></div>`).insertAfter("#col18");
 
     addPlayerTotals(players.players.length);
 }
@@ -125,8 +125,8 @@ function createTotals(totalYardsIn, totalYards, totalParIn, totalPar){
 function addPlayerTotals(numplayers){
     for(let i = 0; i < numplayers; i++){
 
-        $("#totalIn").append(`<div id = "p${i}In"> ${players.players[i].totalIn} </div>`)
-        $("#totalOut").append(`<div id = "p${i}Out"> ${players.players[i].totalIn} </div>`)
+        $("#totalIn").append(`<div class = "cell" id = "p${i}In"> ${players.players[i].totalIn} </div>`)
+        $("#totalOut").append(`<div class = "cell" id = "p${i}Out"> ${players.players[i].totalIn} </div>`)
     }
 }
 

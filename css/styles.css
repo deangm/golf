@@ -13,4 +13,9 @@ img {
 
 #cardCont {
   display: flex;
-  justify-content: space-between; }
+  justify-content: center; }
+
+.cell {
+  border: 1px solid black;
+  padding: 5px 10px;
+  height: 30px; }
