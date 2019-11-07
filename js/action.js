@@ -6,7 +6,7 @@ courses.then(val => {
     val.courses.forEach(element => {
         console.log(element);
         html += `
-                <div class = "card">
+                <div id =  "card${element.id}" class = "card">
                     <div class = "courseName">
                         ${element.name}
                     </div>
@@ -16,27 +16,49 @@ courses.then(val => {
                     <div class = "courseBtn">
                         <button onclick = "showTeeBoxes(${element.id})"> Choose This Course </button>
                     </div>
-                    <div id = "${element.id}">
-                    </div>
+                    <select id = "players${element.id}">
+                        <option>Choose Number of Players</option>
+                    </select>
+                    <select id = "${element.id}">
+                        <option value = "pro">Choose a Tee</option>
+                    </select>
+                   
                 </div>`;
         $("#courseCardCont").html(html);
+        $("select").hide();
     });
 });
 
 
 function showTeeBoxes(id) {
+
+    $(".card").hide();
+    $(`#card${id}`).show();
+   
+    
+
     let courseSelection = request.get(`https://golf-courses-api.herokuapp.com/courses/${id}`);
 
     courseSelection.then(val => {
         let numHoles = val.data.holes;
         numHoles[0].teeBoxes.forEach(tee => {
-            $(`#${id}`).append(`
-                <div onclick = "initializeCard(${id}, '${tee.teeType}')">
-                    ${tee.teeType}
-                </div>
-            `)
+            
+            var o = new Option(tee.teeType, tee.teeType);
+            $(o).html(tee.teeType);
+            $(`#${id}`).append(o);
         });
 
+        for(let i = 0; i < 5; i++){
+            var opt = new Option(i, i);
+            $(`#players${id}`).append(opt);
+        }
+
+        $("select").show();
+        initializeCard(id, "pro");
+        $(`#${id}`).change(function(){
+            initializeCard(id, this.value);
+        });
+        $(`#players${id}`).change(function(){createPlayers(this, this.value)});
     });
 };
 
@@ -130,16 +152,16 @@ function addPlayerTotals(numplayers){
     }
 }
 
-function createPlayers(event, numPlayers){
+function createPlayers(element, numPlayers){
 
-    if(event.which == 13){
+   
         for(let i = 0; i<numPlayers; i ++){
             let player = new Player();
             players.add(player);
         }
-    }
 
-   
+        $(element).hide();
+ 
 }
 
 function clearHtml(el){
@@ -147,10 +169,12 @@ function clearHtml(el){
 }
 
 function changePlayerName(event, player, name, el){
+
+    console.log(player[1]);
    
     if(event.which == 13){
         let updatedName = name.split("<")[0];
-        players.players[player[1]].updateName(updatedName);
+        players.players[player[1]-1].updateName(updatedName);
         $(el).html(updatedName);
         $(el).next().focus();
     
