@@ -71,6 +71,8 @@ function initializeCard(id, tee) {
         let totalYardsIn = 0;
         let totalPar = 0;
         let totalParIn =0;
+        let totalYardsOut = 0;
+        let totalParOut = 0;
     
 
         $("#cardCont").html("");
@@ -97,9 +99,13 @@ function initializeCard(id, tee) {
             totalYards += thing.yards;
             totalPar += thing.par;
             
-            if(i < 9){
+            if(i <= 9){
                 totalYardsIn += thing.yards;
                 totalParIn += thing.par;
+            }
+            if(i > 9){
+                totalYardsOut += thing.yards;
+                totalParOut += thing.par;
             }
           
 
@@ -114,7 +120,7 @@ function initializeCard(id, tee) {
         };
     
         addPlayersToCard(holes.length, players.players.length);
-        createTotals(totalYardsIn, totalYards, totalParIn, totalPar);
+        createTotals(totalYardsIn, totalYards, totalYardsOut, totalParIn, totalParOut, totalPar);
     })
 }
 
@@ -137,9 +143,12 @@ function addPlayersToCard(holes, numPlayers) {
     }
 }
 
-function createTotals(totalYardsIn, totalYards, totalParIn, totalPar){
+function createTotals(totalYardsIn, totalYardsOut, totalYards, totalParIn, totalParOut, totalPar){
     $(`<div id = 'totalIn'><div class = "cell">TotalIn</div><div class = "cell">${totalYardsIn}</div><div class = "cell">${totalParIn}</div><div class = "cell">-</div></div>`).insertAfter("#col9");
-    $(`<div id = 'totalOut'><div class = "cell" >TotalOut</div><div class = "cell" >${totalYards}</div><div class = "cell" >${totalPar}</div><div class = "cell" >-</div></div>`).insertAfter("#col18");
+   
+    $(`<div id = 'totalOut'><div class = "cell" >TotalOut</div><div class = "cell" >${totalYardsOut}</div><div class = "cell" >${totalParOut}</div><div class = "cell" >-</div></div>`).insertAfter("#col18");
+    
+    $(`<div id = 'total'><div class = "cell" >Total</div><div class = "cell" >${totalYards}</div><div class = "cell" >${totalPar}</div><div class = "cell" >-</div></div>`).insertAfter("#totalOut");
 
     addPlayerTotals(players.players.length);
 }
@@ -148,7 +157,8 @@ function addPlayerTotals(numplayers){
     for(let i = 0; i < numplayers; i++){
 
         $("#totalIn").append(`<div class = "cell" id = "p${i}In"> ${players.players[i].totalIn} </div>`)
-        $("#totalOut").append(`<div class = "cell" id = "p${i}Out"> ${players.players[i].totalIn} </div>`)
+        $("#totalOut").append(`<div class = "cell" id = "p${i}Out"> ${players.players[i].totalOut} </div>`)
+        $("#total").append(`<div class = "cell" id = "p${i}Total"> ${players.players[i].total} </div>`)
     }
 }
 
@@ -197,12 +207,16 @@ function printScores(){
 
         let totalInHtml = players.players[player - 1].totalIn;
         let totalOutHtml = players.players[player - 1].totalOut;
+        let totalHtml = players.players[player-1].total;
 
         $(`#p${player-1}In`).html("");
         $(`#p${player-1}In`).html(totalInHtml);
 
         $(`#p${player-1}Out`).html("");
         $(`#p${player-1}Out`).html(totalOutHtml);
+
+        $(`#p${player-1}Total`).html("");
+        $(`#p${player-1}Total`).html(totalHtml);
 
         for (let hole = 1; hole <= 18; hole++) {
             

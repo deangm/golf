@@ -43,6 +43,7 @@ class Player{
         this.scores = {};
         this.totalIn = 0;
         this.totalOut = 0;
+        this.total = 0;
     }
     updateName(name){
         this.name = name;
@@ -58,7 +59,11 @@ class Player{
             if (val <= 9){
                 this.totalIn += Number(this.scores[val]);
             }
-            this.totalOut += Number(this.scores[val]);
+            if(val > 9){
+                this.totalOut += Number(this.scores[val]);
+            }
+            this.total += Number(this.scores[val]);
+            
         });
     }
 }
