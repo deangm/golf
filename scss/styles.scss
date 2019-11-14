@@ -1,26 +1,87 @@
+$darkprimary: #388E3C;
+$primary: #4CAF50;
+$primaryLight: #C8E6C9;
+$accent: #FFC107;
+$secondText: #757575;
+$accentGrey: #BDBDBD;
+
+body, html{
+    margin: 0;
+    height:100%;
+}
 img {
     width: 200px;
     height: 300px;
     object-fit: cover;
 }
-
-.card {
-    text-align: center;
+h1{
+    text-align:center;
+    margin:0;
+   
 }
-
+#changeCourse{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.heading{
+    text-align:center;
+    background: $darkprimary;
+    padding: 20px;
+    color:white;
+    
+}
+#cardSlide{
+    position:relative;
+    height:100%;
+}
+#scoreSlide{
+    opacity: 0;
+    
+}
 #courseCardCont{
     display:flex;
-    justify-content: space-between;
+    justify-content: center;
     padding: 40px 200px;
+    background: $primaryLight;
+    height:100%;
+    .card{
+        margin: 0 50px;
+        text-align: center;
+
+    }
+}
+#selectCont{
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    
+    select{
+        margin: 5px 0;
+    }
 }
 
 #cardCont{
     display:flex;
     justify-content: center;
+    margin-bottom: 50px;
 }
 .cell{
     border: 1px solid black;
     padding: 5px 10px;
     height:30px;
 
+}
+.courseBtn{
+    button{
+        padding: 20px;
+        border-radius: 10px;
+        font-size: 1em;
+        margin-top: 10px;
+        background-color: $accent;
+        &:hover{
+            background-color:$accentGrey;
+            color:white;
+        }
+    }
 }

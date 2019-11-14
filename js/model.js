@@ -38,8 +38,8 @@ var players = new PlayerCollection();
 
 
 class Player{
-    constructor(){
-        this.name = "";
+    constructor(name){
+        this.name = name;
         this.scores = {};
         this.totalIn = 0;
         this.totalOut = 0;
