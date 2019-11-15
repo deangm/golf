@@ -44,17 +44,22 @@ class Player{
         this.totalIn = 0;
         this.totalOut = 0;
         this.total = 0;
+        this.totalPar = 0;
     }
     updateName(name){
         this.name = name;
     }
     addScore(hole, score){
         this.scores[hole] = score;
+        if(Object.keys(this.scores).length == 18){
+            alert(this.total - totalPar)
+        }
     }
     getTotals(){
         let holes = Object.keys(this.scores);
         this.totalOut = 0;
         this.totalIn = 0;
+        this.total = 0;
         holes.forEach(val => {
             if (val <= 9){
                 this.totalIn += Number(this.scores[val]);

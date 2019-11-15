@@ -1,3 +1,6 @@
+let totalPar = 0;
+
+
 let courses = request.get("https://golf-courses-api.herokuapp.com/courses")
 
 courses.then(val => {
@@ -110,7 +113,7 @@ function initializeCard(id, tee) {
         let holes = val.data.holes;
         let totalYards = 0;
         let totalYardsIn = 0;
-        let totalPar = 0;
+        totalPar = 0;
         let totalParIn = 0;
         let totalYardsOut = 0;
         let totalParOut = 0;
@@ -138,7 +141,10 @@ function initializeCard(id, tee) {
             let hole = holes[i].hole;
 
             totalYards += thing.yards;
+            console.log(thing.yards);
+            console.log(totalYards);
             totalPar += thing.par;
+
 
             if (i <= 9) {
                 totalYardsIn += thing.yards;
@@ -176,7 +182,7 @@ function addPlayersToCard(holes, numPlayers) {
 
         for (let hole = 0; hole <= holes; hole++) {
             $(`#col${hole}`).append(`
-                <div class = "cell" id = "${player - 1}${hole}" contenteditable = "true" onclick = "clearHtml" onkeyup = "updateScore(event, this, ${player - 1}, ${hole}, this.innerHTML)">
+                <div class = "cell" id = "${player - 1}${hole}" contenteditable = "true" onclick = "clearHtml(this)" onkeyup = "updateScore(event, this, ${player - 1}, ${hole}, this.innerHTML)">
                     ${players.players[player - 1].scores[hole] ? players.players[player - 1].scores[hole] : "-"}
                 </div>
             `)
@@ -184,7 +190,7 @@ function addPlayersToCard(holes, numPlayers) {
     }
 }
 
-function createTotals(totalYardsIn, totalYardsOut, totalYards, totalParIn, totalParOut, totalPar) {
+function createTotals(totalYardsIn, totalYards, totalYardsOut, totalParIn, totalParOut, totalPar) {
     $(`<div id = 'totalIn'><div class = "cell">TotalIn</div><div class = "cell">${totalYardsIn}</div><div class = "cell">${totalParIn}</div><div class = "cell">-</div></div>`).insertAfter("#col9");
 
     $(`<div id = 'totalOut'><div class = "cell" >TotalOut</div><div class = "cell" >${totalYardsOut}</div><div class = "cell" >${totalParOut}</div><div class = "cell" >-</div></div>`).insertAfter("#col18");
@@ -220,7 +226,7 @@ function createPlayers() {
        
         for (let hole = 0; hole <= 18; hole++) {
             $(`#col${hole}`).append(`
-                <div class = "cell" id = "${players.players.length-1}${hole}" contenteditable = "true" onclick = "clearHtml" onkeyup = "updateScore(event, this, ${players.players.length}, ${hole}, this.innerHTML)">
+                <div class = "cell" id = "${players.players.length-1}${hole}" contenteditable = "true" onclick = "clearHtml(this)" onkeyup = "updateScore(event, this, ${players.players.length-1}, ${hole}, this.innerHTML)">
                     ${players.players[players.players.length-1].scores[hole] ? players.players[players.players.length-1].scores[hole] : "-"}
                 </div>
             `)
@@ -235,7 +241,18 @@ function createPlayers() {
 }
 
 function clearHtml(el) {
-    $(el).html("");
+   
+    let html = $(el).html();
+
+    console.log(html);
+
+    if(Number(html)){
+        return
+    }
+    else{
+        $(el).html("");
+    }
+   
 }
 
 function changePlayerName(event, player, name, el) {
@@ -262,13 +279,29 @@ function changePlayerName(event, player, name, el) {
 
 function updateScore(event, el, player, hole, score) {
     
+    $(el).css("color", "grey");
+    $(el).css("opacity", ".5");
     if (event.which == 13) {
+        
+
         let updatedScore = score.split("<")[0];
-        players.players[player].addScore(hole, updatedScore);
-        players.players[player].getTotals();
-        $(el).html(updatedScore);
-        $(el).next().focus();
-        printScores();
+        console.log(updatedScore);
+        
+        if(Number(updatedScore)){
+            players.players[player].addScore(hole, updatedScore);
+            players.players[player].getTotals();
+            $(el).html(updatedScore);
+            $(el).css("opacity", "1");
+            $(el).css("color", "green");
+            $(el).next().focus();
+            printScores();
+        }
+        else{
+          
+           $(el).html("");
+
+        }
+       
     }
 }
 
