@@ -9,7 +9,7 @@ courses.then(val => {
  
 
     val.courses.forEach(element => {
-        console.log(element);
+      
         html += `
                 <div id =  "card${element.id}" class = "card">
                     <div class = "courseImage">
@@ -49,15 +49,17 @@ function fadeOut(element){
     $(element).animate ({
         opacity: "0",
     }, 250, function(){
+        $(element).hide();
         slideLeft($("#cardSlide"));
     })
 }
 
 function fadeIn(element) {
+    $(element).show();
     $(element).animate({
         opacity: "1",
     }, 500, function () {
-        console.log("done");
+     
     })
 }
 
@@ -141,8 +143,7 @@ function initializeCard(id, tee) {
             let hole = holes[i].hole;
 
             totalYards += thing.yards;
-            console.log(thing.yards);
-            console.log(totalYards);
+           
             totalPar += thing.par;
 
 
@@ -195,7 +196,7 @@ function createTotals(totalYardsIn, totalYards, totalYardsOut, totalParIn, total
 
     $(`<div id = 'totalOut'><div class = "cell" >TotalOut</div><div class = "cell" >${totalYardsOut}</div><div class = "cell" >${totalParOut}</div><div class = "cell" >-</div></div>`).insertAfter("#col18");
 
-    $(`<div id = 'total'><div class = "cell" >Total</div><div class = "cell" >${totalYards}</div><div class = "cell" >${totalPar}</div><div class = "cell" >-</div></div>`).insertAfter("#totalOut");
+    $(`<div id = 'total'><div class = "cell" >Total</div><div class = "cell" >${totalYards}</div><div class = "cell" id = "totalPar" >${totalPar}</div><div class = "cell" >-</div></div>`).insertAfter("#totalOut");
 
     addPlayerTotals(players.players.length);
 }
@@ -244,8 +245,6 @@ function clearHtml(el) {
    
     let html = $(el).html();
 
-    console.log(html);
-
     if(Number(html)){
         return
     }
@@ -257,7 +256,6 @@ function clearHtml(el) {
 
 function changePlayerName(event, player, name, el) {
 
-    console.log(player[1]);
 
     if (event.which == 13) {
         let updatedName = name.split("<")[0];
@@ -277,6 +275,8 @@ function changePlayerName(event, player, name, el) {
     }
 }
 
+
+
 function updateScore(event, el, player, hole, score) {
     
     $(el).css("color", "grey");
@@ -285,7 +285,7 @@ function updateScore(event, el, player, hole, score) {
         
 
         let updatedScore = score.split("<")[0];
-        console.log(updatedScore);
+  
         
         if(Number(updatedScore)){
             players.players[player].addScore(hole, updatedScore);

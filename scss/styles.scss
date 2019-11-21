@@ -19,6 +19,14 @@ h1{
     margin:0;
    
 }
+#addPlayer{
+    cursor: pointer;
+}
+#changeCourse{
+margin-top:20px;
+padding:20px;
+cursor: pointer;
+}
 #changeCourse{
     position: absolute;
     top: 10px;
@@ -36,11 +44,12 @@ h1{
     height:100%;
 }
 #scoreSlide{
+    display:none;
     opacity: 0;
     background-color: $primaryLight;
     height: 100%;
     #cardCont{
-        background:$accentGrey;
+        background:#dadfea;
     }
     
 }
@@ -85,7 +94,9 @@ h1{
 
 }
 .courseBtn{
+    cursor:pointer;
     button{
+        cursor:pointer;
         padding: 20px;
         border-radius: 10px;
         font-size: 1em;
@@ -96,6 +107,22 @@ h1{
             color:white;
         }
     }
+}
+.container{
+    position: absolute;
+    top: 50%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    #scoreModal{
+        background: grey;
+        display: none;
+    }
+}
+
+#scoreModal{
+    background: grey;
+    display:none;
 }
 @media (max-width: 850px){
  

@@ -11,6 +11,14 @@ h1 {
   text-align: center;
   margin: 0; }
 
+#addPlayer {
+  cursor: pointer; }
+
+#changeCourse {
+  margin-top: 20px;
+  padding: 20px;
+  cursor: pointer; }
+
 #changeCourse {
   position: absolute;
   top: 10px;
@@ -27,11 +35,12 @@ h1 {
   height: 100%; }
 
 #scoreSlide {
+  display: none;
   opacity: 0;
   background-color: #C8E6C9;
   height: 100%; }
   #scoreSlide #cardCont {
-    background: #BDBDBD; }
+    background: #dadfea; }
 
 #courseCardCont {
   display: flex;
@@ -63,15 +72,32 @@ h1 {
   padding: 5px 10px;
   height: 30px; }
 
-.courseBtn button {
-  padding: 20px;
-  border-radius: 10px;
-  font-size: 1em;
-  margin-top: 10px;
-  background-color: #FFC107; }
-  .courseBtn button:hover {
-    background-color: #BDBDBD;
-    color: white; }
+.courseBtn {
+  cursor: pointer; }
+  .courseBtn button {
+    cursor: pointer;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 1em;
+    margin-top: 10px;
+    background-color: #FFC107; }
+    .courseBtn button:hover {
+      background-color: #BDBDBD;
+      color: white; }
+
+.container {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  justify-content: center;
+  width: 100%; }
+  .container #scoreModal {
+    background: grey;
+    display: none; }
+
+#scoreModal {
+  background: grey;
+  display: none; }
 
 @media (max-width: 850px) {
   #courseCardCont {

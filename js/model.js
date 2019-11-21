@@ -49,10 +49,40 @@ class Player{
     updateName(name){
         this.name = name;
     }
+    
     addScore(hole, score){
         this.scores[hole] = score;
+        
         if(Object.keys(this.scores).length == 18){
-            alert(this.total - totalPar)
+            
+            let total = Number($("#totalPar").html());
+            let html;
+            let score = this.total - total;
+         
+            if(score == 0){
+                html = "You Got Par! Excellent";
+            }
+            else if(score == 1){
+                html = "You got Bogey. Not Bad."
+            }
+            else if( score == -2){
+                html = "You got Eagle! NICE!"
+            }
+            else if (score == -3){
+                html = "You got DOUBLE EAGLE! GO PRO"
+            }
+            else if(score == 2){
+                html = "Double Bogey. Meh."
+            }
+            else if(score > 2){
+                html = "Golf isn't your sport"
+            }
+            else if(score < -2){
+                html = "You win at life!"
+            }
+
+            $("#scoreModal").show();
+            $("#scoreAlert").append(html);
         }
     }
     getTotals(){
