@@ -55,7 +55,7 @@ class Player{
         this.getTotals();
 
         
-        if(Object.keys(this.scores).length == 1){
+        if(Object.keys(this.scores).length == 18){
             
             let total = Number($("#totalPar").html());
             let score = this.total - total;
