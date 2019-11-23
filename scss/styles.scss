@@ -110,13 +110,23 @@ cursor: pointer;
 }
 .container{
     position: absolute;
-    top: 50%;
+    top: 30%;
     display: flex;
     justify-content: center;
     width: 100%;
+    height: auto;
     #scoreModal{
+        width: 40%;
+        text-align: center;
         background: grey;
+        opacity: .9;
         display: none;
+    }
+    #scoreAlert{
+        margin:20px;
+    }
+    button{
+        margin: 20px;
     }
 }
 

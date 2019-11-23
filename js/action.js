@@ -1,5 +1,9 @@
 let totalPar = 0;
 
+$(`#addPlayer`).click(function () { 
+    createPlayers();
+ });
+
 
 let courses = request.get("https://golf-courses-api.herokuapp.com/courses")
 
@@ -91,20 +95,13 @@ function showTeeBoxes(id, courseName) {
             $(`#${id}`).append(o);
         });
 
-        for (let i = 0; i < 5; i++) {
-            var opt = new Option(i, i);
-            $(`#players${id}`).append(opt);
-        }
-
         $("select").show();
 
         initializeCard(id, "champion");
         $(`#${id}`).change(function () {
             initializeCard(id, this.value);
         });
-        $(`#addPlayer`).click(function () { 
-            createPlayers();
-         });
+      
     });
 };
 
@@ -335,4 +332,7 @@ function printScores() {
 function changeCourse(){
     $("#selectCont").html("");
     fadeOut($("#scoreSlide"));
+}
+function closeModal(){
+    $("#scoreModal").hide();
 }

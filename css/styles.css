@@ -87,13 +87,21 @@ h1 {
 
 .container {
   position: absolute;
-  top: 50%;
+  top: 30%;
   display: flex;
   justify-content: center;
-  width: 100%; }
+  width: 100%;
+  height: auto; }
   .container #scoreModal {
+    width: 40%;
+    text-align: center;
     background: grey;
+    opacity: .9;
     display: none; }
+  .container #scoreAlert {
+    margin: 20px; }
+  .container button {
+    margin: 20px; }
 
 #scoreModal {
   background: grey;

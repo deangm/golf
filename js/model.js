@@ -52,35 +52,28 @@ class Player{
     
     addScore(hole, score){
         this.scores[hole] = score;
+        this.getTotals();
+
         
-        if(Object.keys(this.scores).length == 18){
+        if(Object.keys(this.scores).length == 1){
             
             let total = Number($("#totalPar").html());
-            let html;
             let score = this.total - total;
+            let html = this.name + " You got " + score;
          
             if(score == 0){
-                html = "You Got Par! Excellent";
+                html += ". You Got Par! Excellent";
             }
-            else if(score == 1){
-                html = "You got Bogey. Not Bad."
+            else if(score < 0){
+                html += " Great Score! Keep up to good work!"
             }
-            else if( score == -2){
-                html = "You got Eagle! NICE!"
+            else if(score > 0 && score <= 5){
+                html += " Not too bad!"
             }
-            else if (score == -3){
-                html = "You got DOUBLE EAGLE! GO PRO"
+            else if(score > 5){
+                html += " Try something else."
             }
-            else if(score == 2){
-                html = "Double Bogey. Meh."
-            }
-            else if(score > 2){
-                html = "Golf isn't your sport"
-            }
-            else if(score < -2){
-                html = "You win at life!"
-            }
-
+            $("#scoreAlert").html("");
             $("#scoreModal").show();
             $("#scoreAlert").append(html);
         }
