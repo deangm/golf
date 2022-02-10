@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/deangm/golf#readme",
   "dependencies": {
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "sass": "^1.23.1",
     "scss": "^0.2.4"
   }
